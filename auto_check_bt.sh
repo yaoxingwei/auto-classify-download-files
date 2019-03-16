@@ -1,7 +1,7 @@
 #!/bin/sh
 
 btname=0
-output_file=0
+output_file=bt_info.log
 bt_folder=/home/yxw/share/github/torsniff/torrents
 
 ### func ###
@@ -21,9 +21,9 @@ getdir()
             #echo "is file!!"
             #echo $(pwd)
             #echo $dir_or_file
-            echo $dir_or_file >> test.log
-            aria2c -S $dir_or_file | grep -E "Name:|Total Length:" >> test.log
-            echo "\n" >> test.log
+            echo $dir_or_file >> $output_file
+            aria2c -S $dir_or_file | grep -E "Name:|Total Length:" >> $output_file
+            echo "\n" >> $output_file
         fi  
     done
 }
@@ -31,5 +31,3 @@ getdir()
 
 ### main ###
 getdir $bt_folder
-
-#aria2c -S torrents/01/55/*.torrent | grep -E "Name:|Total Length:"
