@@ -2,9 +2,38 @@
 
 btname=0
 output_file=bt_info.log
-bt_folder=/home/yxw/share/github/torsniff/torrents
+#bt_folder=/home/yxw/share/github/torsniff/torrents
+bt_folder=/home/yxw/after_work/mount/torrents
+old_name=0
+trans_name=0
+ret=0
 
 ### func ###
+translate()
+{
+    for element in "google" "bing" "yandex"
+    do
+        echo $element
+	trans_name=$(./trans :zh -b -e $element -no-auto "$1")
+        #ret=$(echo $trans_name | grep "ERROR")
+	#echo "ret=$ret"
+	echo $trans_name
+	if [ $trans_name = 0 ];then
+	    continue
+	else
+		ret=$(echo $trans_name | grep "ERROR")
+		echo "ret=$ret"
+		if [ $ret = 0];then
+			return 0
+		else
+			continue
+		fi
+	fi
+    done
+}
+
+
+
 getdir()
 {
     for element in `ls $1`
@@ -23,7 +52,11 @@ getdir()
             #echo $dir_or_file
             echo $dir_or_file >> $output_file
             aria2c -S $dir_or_file | grep -E "Name:|Total Length:" >> $output_file
-            echo "\n" >> $output_file
+	    old_name=$(aria2c -S $dir_or_file | grep -E "Name:")
+	    #trans_name=$(./trans :zh -b "$temp_name")
+	    translate $old_name
+	    echo $trans_name >> $output_file
+	    echo "\n" >> $output_file
         fi  
     done
 }
