@@ -3,6 +3,8 @@
 btname=0
 output_file=bt_info.log
 bt_folder=/home/yxw/share/github/torsniff/torrents
+old_name=0
+trans_name=0
 
 ### func ###
 getdir()
@@ -23,7 +25,10 @@ getdir()
             #echo $dir_or_file
             echo $dir_or_file >> $output_file
             aria2c -S $dir_or_file | grep -E "Name:|Total Length:" >> $output_file
-            echo "\n" >> $output_file
+	    old_name=$(aria2c -S $dir_or_file | grep -E "Name:")
+	    trans_name=$(./trans :zh -b "$temp_name")
+	    echo $trans_name >> $output_file
+	    echo "\n" >> $output_file
         fi  
     done
 }
