@@ -31,8 +31,6 @@ translate()
     done
 }
 
-
-
 getdir()
 {
     for element in `ls $1`
@@ -59,7 +57,6 @@ getdir()
         fi  
     done
 }
-
 
 ### main ###
 getdir $bt_folder
