@@ -2,11 +2,9 @@
 
 btname=0
 output_file=bt_info.log
-#bt_folder=/home/yxw/share/github/torsniff/torrents
-bt_folder=/home/yxw/after_work/mount/torrents
+bt_folder=/home/yxw/share/github/torsniff/torrents
 old_name=0
 trans_name=0
-ret=0
 
 ### func ###
 translate()
@@ -53,8 +51,7 @@ getdir()
             echo $dir_or_file >> $output_file
             aria2c -S $dir_or_file | grep -E "Name:|Total Length:" >> $output_file
 	    old_name=$(aria2c -S $dir_or_file | grep -E "Name:")
-	    #trans_name=$(./trans :zh -b "$temp_name")
-	    translate $old_name
+	    trans_name=$(./trans :zh -b -e google -no-autocorrect "$temp_name")
 	    echo $trans_name >> $output_file
 	    echo "\n" >> $output_file
         fi  
